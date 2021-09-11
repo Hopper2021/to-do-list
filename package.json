@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Hopper2021/to-do-list#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "jquery": "^3.6.0",
     "pg": "^8.7.1"
   }
 }

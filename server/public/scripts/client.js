@@ -9,7 +9,6 @@ function readyNow() {
 function getItems () {
     let itemToAdd = {
         name: $('#item-input').val(),
-        complete: '',
     }
     $.ajax({
         method: 'POST',
