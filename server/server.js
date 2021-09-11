@@ -1,11 +1,12 @@
 const express = require('express');
-const app = express;
+const app = express();
 
+app.use(express.urlencoded({ extended: true}));
 // Make all items in public readily available
 app.use(express.static('server/public'));
 
 // Define router file and create url
-let itemRouter = require('./router/item.router.js')
+let itemRouter = require('./routes/items.js')
 app.use('/items', itemRouter);
 
 
