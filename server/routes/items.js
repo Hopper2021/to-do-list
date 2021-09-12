@@ -15,12 +15,11 @@ router.post('/', (req, res) => {
     const itemToAdd = req.body;
     const queryText = `
         INSERT INTO "items" 
-        ("name", "complete")
-        VALUES ($1, $2);
+        ("name")
+        VALUES ($1);
     `;
     pool.query(queryText, [
         itemToAdd.name, // $1
-        itemToAdd.complete // $2
     ]).then((result) => {
         console.log('Success! in router.post');
         res.sendStatus(200);
