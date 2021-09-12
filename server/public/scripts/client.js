@@ -25,16 +25,15 @@ function getItems () {
 }
 
 function getItemList() {
-    $('#list-items-row').empty();
+    $('.list-items-body').empty();
     $.ajax({
         method: 'GET',
         url: '/items'
     }).then(function(response) {
         console.log('in GET new item list', response);
         for ( let i=0; i<response.length; i++ ) {
-            $('#list-item-row').append(`
+            $('.list-items-body').append(`
                 <tr>
-                    <td>${response[i].id}</td>
                     <td>${response[i].name}</td>
                     <td>${response[i].complete}</td>
                 </tr>

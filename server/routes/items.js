@@ -13,11 +13,7 @@ const pool = new pg.Pool({
 router.post('/', (req, res) => {
     console.log('In items router.post');
     const itemToAdd = req.body;
-    const queryText = `
-        INSERT INTO "items" 
-        ("name")
-        VALUES ($1);
-    `;
+    const queryText = `INSERT INTO "items" ("name") VALUES ($1);`;
     pool.query(queryText, [
         itemToAdd.name, // $1
     ]).then((result) => {
