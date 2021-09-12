@@ -27,6 +27,7 @@ function getItems () {
 }
 
 function getItemList() {
+    $('#item-input').val('');
     $('.list-items-body').empty();
     $.ajax({
         method: 'GET',
@@ -35,12 +36,11 @@ function getItemList() {
         console.log('in GET new item list', response);
         for ( let i=0; i<response.length; i++ ) {
             const item = response[i];
-            const id = response[i].id;
-
+            
             $('.list-items-body').append(`
                 <tr>
-                    <td>${item.name}</td>
-                    <td>${item.complete}</td>
+                    <td data-name="name-cell">${item.name}</td>
+                    <td data-name="status-cell">${item.complete}</td>
                     <td><button data-id=${item.id} class="complete-button">Mark Complete</button></td>
                     <td><button data-id=${item.id} class="delete-button">Delete</button></td>
                 </tr>
@@ -52,6 +52,8 @@ function getItemList() {
 function markComplete() {
     console.log('In markComplete, this:', $(this));
     const itemId = $(this).data('id');
+    
+
     $.ajax({
         method: 'PUT',
         url: `/items/${itemId}`
