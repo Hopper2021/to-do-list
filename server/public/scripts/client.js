@@ -36,6 +36,7 @@ function getItemList() {
         for ( let i=0; i<response.length; i++ ) {
             const item = response[i];
             const id = response[i].id;
+
             $('.list-items-body').append(`
                 <tr>
                     <td>${item.name}</td>
@@ -65,4 +66,16 @@ function markComplete() {
 
 function deleteRow() {
     console.log('In deleteRow, this:', $(this));
+
+    const itemId = $(this).data('id');
+    $.ajax({
+        method: 'DELETE',
+        url: `/items/${itemId}`
+    }).then(function(response) {
+        console.log('Success! Item removed.');
+        getItemList();
+    }).catch(function(error) {
+        alert('Something went wrong!');
+        console.log('Unable to delete item, error:', error);
+    });
 }
