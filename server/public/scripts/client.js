@@ -33,13 +33,15 @@ function getItemList() {
         url: '/items'
     }).then(function(response) {
         console.log('in GET new item list', response);
+        const item = response[i];
+        const id = response[i].id;
         for ( let i=0; i<response.length; i++ ) {
             $('.list-items-body').append(`
                 <tr>
-                    <td>${response[i].name}</td>
-                    <td>${response[i].complete}</td>
-                    <td><button class="complete-button">Mark Complete</button></td>
-                    <td><button class="delete-button">Delete</button></td>
+                    <td>${item.name}</td>
+                    <td>${item.complete}</td>
+                    <td><button data-id=${item.id} class="complete-button">Mark Complete</button></td>
+                    <td><button data-id=${item.id} class="delete-button">Delete</button></td>
                 </tr>
             `);
         }
@@ -48,6 +50,17 @@ function getItemList() {
 
 function markComplete() {
     console.log('In markComplete, this:', $(this));
+    const itemId = $(this).data('id');
+    $.ajax({
+        method: 'PUT',
+        url: `/items/${itemId}`
+    }).then(function(response) {
+        console.log('Success! Item marked complete.');
+        getItemList();
+    }).catch(function(error) {
+        alert('Something went wrong!');
+        console.log('Unable to mark item as complete, error:', error);
+    });
 }
 
 function deleteRow() {
