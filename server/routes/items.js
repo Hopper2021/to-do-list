@@ -36,4 +36,21 @@ router.get('/', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+    const itemId = req.params.id;
+    const queryText = `
+        UPDATE "items"
+        SET "complete" = true
+        WHERE "id" = $1;`;
+    pool.query(queryText, [itemId]).then((result) => {
+        console.log('Item marked complete!');
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Unable to mark item as complete, error: ', error);
+        res.sendStatus(500);
+    })
+});
+
+
+
 module.exports = router;

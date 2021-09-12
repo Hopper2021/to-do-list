@@ -33,9 +33,9 @@ function getItemList() {
         url: '/items'
     }).then(function(response) {
         console.log('in GET new item list', response);
-        const item = response[i];
-        const id = response[i].id;
         for ( let i=0; i<response.length; i++ ) {
+            const item = response[i];
+            const id = response[i].id;
             $('.list-items-body').append(`
                 <tr>
                     <td>${item.name}</td>
