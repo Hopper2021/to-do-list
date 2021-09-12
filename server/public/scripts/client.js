@@ -3,8 +3,10 @@ $(readyNow);
 
 function readyNow() {
     console.log('DOM Loaded');
-    $('#add-item-button').on('click', getItems);
     getItemList();
+    $('#add-item-button').on('click', getItems);
+    $('.list-items-body').on('click', '.complete-button', markComplete);
+    $('.list-items-body').on('click', '.delete-button', deleteRow);
 }
 
 function getItems () {
@@ -36,8 +38,18 @@ function getItemList() {
                 <tr>
                     <td>${response[i].name}</td>
                     <td>${response[i].complete}</td>
+                    <td><button class="complete-button">Mark Complete</button></td>
+                    <td><button class="delete-button">Delete</button></td>
                 </tr>
             `);
         }
     });
+}
+
+function markComplete() {
+    console.log('In markComplete, this:', $(this));
+}
+
+function deleteRow() {
+    console.log('In deleteRow, this:', $(this));
 }
