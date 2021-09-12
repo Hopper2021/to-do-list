@@ -37,6 +37,8 @@ router.get('/', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
+    console.log('in router.put mark item complete');
+    
     const itemId = req.params.id;
     const queryText = `
         UPDATE "items"
@@ -51,6 +53,19 @@ router.put('/:id', (req, res) => {
     })
 });
 
-
+router.delete('/:id', (req, res) => {
+    console.log('in router.delete, delete item');
+    
+    const itemId = req.params.id;
+    const queryText = `
+        DELETE FROM "items" WHERE "id" = $1;`;
+    pool.query(queryText, [itemId]).then((result) => {
+        console.log('Item deleted!');
+        res.sendStatus(200);
+    }).catch((error) => {
+        console.log('Unable to delete item, error: ', error);
+        res.sendStatus(500);
+    })
+});
 
 module.exports = router;
