@@ -1,6 +1,8 @@
 console.log('client ready');
 $(readyNow);
 
+const itemList = [];
+
 function readyNow() {
     console.log('DOM Loaded');
     getItemList();
@@ -33,26 +35,31 @@ function getItemList() {
         method: 'GET',
         url: '/items'
     }).then(function(response) {
-        console.log('in GET new item list', response);
+        console.log('in GET new item list,', response);
+
         for ( let i=0; i<response.length; i++ ) {
             const item = response[i];
-            
+            itemList.push(response);
+        
             $('.list-items-body').append(`
                 <tr>
-                    <td data-name="name-cell">${item.name}</td>
-                    <td data-name="status-cell">${item.complete}</td>
+                    <td class="name-cell">${item.name}</td>
+                    <td class="status-cell">${item.complete}</td>
                     <td><button data-id=${item.id} class="complete-button">Mark Complete</button></td>
                     <td><button data-id=${item.id} class="delete-button">Delete</button></td>
                 </tr>
-            `);
-        }
-    });
-}
+            `); 
+            if ( item.complete === true ){
+                $('.name-cell').css('background-color', 'green');
+                $('.status-cell').css('background-color', 'green');
+            }
+        } 
+    })
+};
 
 function markComplete() {
     console.log('In markComplete, this:', $(this));
     const itemId = $(this).data('id');
-    
 
     $.ajax({
         method: 'PUT',
@@ -68,8 +75,8 @@ function markComplete() {
 
 function deleteRow() {
     console.log('In deleteRow, this:', $(this));
-
     const itemId = $(this).data('id');
+
     $.ajax({
         method: 'DELETE',
         url: `/items/${itemId}`
